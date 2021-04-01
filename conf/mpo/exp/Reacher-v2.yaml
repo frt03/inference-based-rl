@@ -1,0 +1,38 @@
+dmc: False
+env: Reacher-v2
+
+n_envs: 1  # Number of envs run in parallel.
+seed: 0
+steps: 3_000_000  # Number of env steps.
+act_deterministically: True  # Use the mode of a Gaussian in action selection during evaluation.
+
+actor:
+  lr: 1e-4
+  nn_size: 256  # Sizes of hidden layers are [nn_size, nn_size, nn_size]
+  dual_constraint: 1e-1
+  mean_constraint: 0.0005
+  var_constraint: 5e-7
+  action_penalty_constraint: 1e-3
+  init_log_eta_mu: 1.0
+  init_log_eta_var: 10.0
+  eta_lr: 1e-2
+  target_actor_update_intervals: 100
+  init_scale: 0.5  # scale of stddev of the policy
+
+agent:
+  batch_size: 256  # Size of each mini-batch.
+  update_interval: 8  # number of samples per calling update function
+  update_steps: 1  # number of iteration for updates
+  gamma: 0.99  # discounted factor gamma
+  init_log_temperature: 1.0
+  temperature_lr: 1e-2  # learning rate of temperature.
+  action_samples: 20
+
+critic:
+  lr: 1e-4
+  nn_size: 512
+  target_critic_update_intervals: 100
+
+replay_buffer:
+  start_size: 1_000
+  size: 1_000_000

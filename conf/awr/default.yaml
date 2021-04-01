@@ -1,0 +1,128 @@
+defaults:
+  - exp: HalfCheetah-v2
+
+settings: online
+
+demo: False  # Just run evaluation, not training.
+
+eval:
+  n_runs: 10  # Number of episodes run for each evaluation.
+  interval: 20_000  # Interval (in time steps) between evaluations.
+
+gpu: -1  # No GPU if -1.
+
+log:
+  dir: results  # Base logging directory.
+  interval: 1_000  # Interval (in time steps) between outputting log messages during training
+  level: 20  # Logging level.
+  monitor: False  # Wrap env with gym.wrappers.Monitor.
+  render: False  # Render env states in a GUI window.
+
+pretrained:
+  dir: False # Directory to load an agent from.
+  load: False  # If True, a pretrained model is downloaded and used.
+  type: best  # best or final.
+
+hydra:
+  run:
+    dir: ./${log.dir}/awr/${env}/seed-${seed}/${now:%Y%m%d-%H-%M-%S}
+  help:
+    app_name: ${hydra.job.name}
+
+    header: |
+      Trains an agent by Advantage Weighted Regression (AWR).
+      For details of the algorithm see https://arxiv.org/abs/1910.00177.
+
+    footer: |
+      Powered by Hydra (https://hydra.cc)
+      Use --hydra-help to view Hydra specific help
+
+
+    # Basic Hydra flags:
+    #   $FLAGS_HELP
+    #
+    # Config groups, choose one of:
+    #   $APP_CONFIG_GROUPS: All config groups that does not start with hydra/.
+    #   $HYDRA_CONFIG_GROUPS: All the Hydra config groups (starts with hydra/)
+    #
+    # Configuration generated with overrides:
+    #   $CONFIG : Generated config
+    #
+    template: |
+      ${hydra.help.header}
+
+      ----- Configuration Groups -----
+      Compose your configuration from these groups. (Default: HalfCheetah-v2)
+
+      $APP_CONFIG_GROUPS
+
+      ----- Configuration Options -----
+      Override anything in the config by, e.g., foo.bar=value
+
+      act_deterministically: If True, the mode of a Gaussian is used for action selection during evaluation.
+
+      actor:
+        action_std: Std of a Gaussian policy (fixed).
+        bound_loss_weight: Weight of a policy bound loss.
+        lr: Learning rate of actor's optimizer.
+        momentum: Momentum of actor's optimizer.
+        nn_size: Sizes of hidden layers are defined as [nn_size, nn_size // 2].
+        output_scale: Weight initialization scale of policy output.
+        update_steps: TODO
+        weight_clip: exp(Adv/temp) is clipped by this value.
+
+      agent:
+        batch_size: Size of each mini-batch.
+        gamma: Discount factor gamma.
+        lambd: Lambda of TD lambda
+        samples_per_iter: TODO
+        standardize_advantages: If True, advantage is standardized.
+        temperature: Temperature used in policy update weights.
+        update_interval: TODO
+
+      critic:
+        lr: Learning rate of critic's optimizer.
+        momentum: Momentum of critic's optimizer.
+        nn_size: Sizes of hidden layers are defined as [nn_size, nn_size // 2].
+        update_steps: TODO
+
+      demo: If True, just run evaluation, not training.
+      
+      dmc: If True, DM control suite env, specified by domain and task options, is used.
+      
+      domain: Domain name of a DM control suite env. 
+      
+      env: HalfCheetah-v2
+
+      eval.n_runs: Number of episodes run for each evaluation.
+      eval.interval: Interval (in time steps) between evaluations.
+
+      gpu: No GPU if -1.
+
+      log
+        dir: Base logging directory. 
+        interval: Interval (in time steps) between outputting log messages during training
+        level: Logging level.
+        monitor: Wrap env with gym.wrappers.Monitor.
+        render: Render env states in a GUI window.
+
+      n_envs: Number of envs run in parallel.
+
+      normalizer:
+        samples: TODO
+
+      pretrained
+        dir: Directory to load an agent from.
+        load: If True, a pretrained model is downloaded and used.
+        type: Type of pretrained model. Either best or final.
+
+      replay_buffer:
+        size: Size of a replay buffer.
+
+      seed: Random seed.
+      
+      steps: 3_000_000  # Number of env steps.
+
+      task: Task name of a DM control suite env.
+
+      ${hydra.help.footer}

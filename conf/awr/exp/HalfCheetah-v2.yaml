@@ -1,0 +1,38 @@
+dmc: False
+env: HalfCheetah-v2
+
+n_envs: 1  # Number of envs run in parallel.
+seed: 0
+steps: 3_000_000  # Number of env steps.
+act_deterministically: True  # Use the mode of a Gaussian in action selection during evaluation.
+
+actor:
+  action_std: 0.4  # Std of a Gaussian policy (fixed).
+  bound_loss_weight: 10.0  # Weight of a policy bound loss.
+  lr: 5e-5
+  momentum: 0.9
+  nn_size: 128  # Sizes of hidden layers are [nn_size, nn_size // 2]
+  output_scale: 0.01  # Weight initialization scale of policy output.
+  update_steps: 1_000
+  weight_clip: 20.0
+
+agent:
+  batch_size: 256  # Size of each mini-batch.
+  gamma: 0.99  # discount factor gamma
+  lambd: 0.95  # td lambda
+  samples_per_iter: 2_048
+  standardize_advantages: True
+  temperature: 1.0
+  update_interval: 3_000
+
+critic:
+  lr: 1e-2
+  momentum: 0.9
+  nn_size: 128
+  update_steps: 200
+
+normalizer:
+  samples: 300_000
+
+replay_buffer:
+  size: 50_000

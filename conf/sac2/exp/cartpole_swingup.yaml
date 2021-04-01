@@ -1,0 +1,28 @@
+# This is a temporary file!
+
+dmc: True
+domain: cartpole
+task: swingup
+env: ${domain}_${task}
+
+n_envs: 1  # Number of envs run in parallel.
+seed: 0
+steps: 2_500_000  # Number of env steps.
+
+actor:
+  lr: 3e-4
+  nn_size: 256  # Sizes of hidden layers are [nn_size, nn_size 2]
+  output_scale: 1.0  # Weight initialization scale of policy output.
+
+agent:
+  alpha_lr: 3e-4  # Learning rate of alpha.
+  batch_size: 256  # Size of each mini-batch.
+  gamma: 0.99  # discount factor gamma
+
+critic:
+  lr: 3e-4
+  nn_size: 256
+
+replay_buffer:
+  start_size: 10000
+  size: 1_000_000
