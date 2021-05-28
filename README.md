@@ -1,4 +1,4 @@
-# Identifying Co-Adaptation of Algorithmic and Implementational Innovations in Deep Reinforcement Learning: Taxonomy of Inference-based Algorithms
+# Co-Adaptation of Algorithmic and Implementational Innovations in Inference-based Deep Reinforcement Learning
 
 [[arxiv]](https://arxiv.org/abs/2103.17258)
 
@@ -7,7 +7,7 @@ This codebase includes inference-based off-policy algorithms, both KL control ([
 If you use this codebase for your research, please cite the paper:
 ```
 @article{furuta2021inference,
-  title={Identifying Co-Adaptation of Algorithmic and Implementational Innovations in Deep Reinforcement Learning: Taxonomy of Inference-based Algorithms},
+  title={Co-Adaptation of Algorithmic and Implementational Innovations in Inference-based Deep Reinforcement Learning},
   author={Hiroki Furuta and Tadashi Kozuno and Tatsuya Matsushima and Yutaka Matsuo and Shixiang Shane Gu},
   journal={arXiv preprint arXiv:arXiv:2103.17258},
   year={2021}
